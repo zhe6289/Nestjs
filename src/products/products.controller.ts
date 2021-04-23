@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Delete, Header, Body, Param } from '@nestjs/common'
 import { ProductService } from './products.service';
+import { ApiCreatedResponse, ApiResponse, ApiBody } from '@nestjs/swagger';
 
 @Controller('products')
 export class ProductsController {
@@ -11,12 +12,13 @@ export class ProductsController {
     @Body('description') prodDesc: string,
     @Body('price') prodPrice: number,
     @Body('expiredate') prodDate: string,
-  ) {
+  ) : any {
     const generatedId = this.productsService.insertProduct(prodTitle, prodDesc, prodPrice, prodDate);
     return { id: generatedId };
   };
 
   @Get()
+  @ApiCreatedResponse({ description: 'Get Product' })
   getAllProducts() {
     return this.productsService.getProducts()
   }
