@@ -1,12 +1,17 @@
 import { Controller, Get, Post, Delete, Header, Body, Param } from '@nestjs/common'
 import { ProductService } from './products.service';
-import { ApiCreatedResponse, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { CreateProduct } from './products.swagger';
+import { ApiCreatedResponse, ApiProperty, ApiBody } from '@nestjs/swagger';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductService) {}
 
   @Post()
+  @ApiBody({
+    description: 'The product has been successfully created.',
+    type: CreateProduct,
+  })  
   addProduct (
     @Body('title') prodTitle: string,
     @Body('description') prodDesc: string,
